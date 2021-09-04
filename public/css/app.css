@@ -1,0 +1,90 @@
+.bg-blue {
+    background-color: #6777ef !important;
+}
+
+.text-blue {
+    color: #6777ef !important;
+}
+
+.btn-blue {
+    color: #ffffff;
+    background-color: #6777ef !important;
+    border-color: #6777ef !important;
+}
+
+.border-left-blue {
+    border-left: 0.25rem solid #4e73df !important;
+}
+.border-left-green {
+    border-left: 0.25rem solid #43df5d !important;
+}
+.border-left-red {
+    border-left: 0.25rem solid #fc3b00 !important;
+}
+.border-left-yellow {
+    border-left: 0.25rem solid #fbff00 !important;
+}
+
+.border-bottom-light {
+    border-bottom: 3px solid #fff;
+}
+
+@media screen and (max-width: 1800px) {
+    #card {
+        max-width: 20rem;
+        height: 26rem;
+    }
+    #button {
+        position: absolute;
+        bottom: 1em;
+        right: 1em;
+        padding: 0.4em 6em;
+    }
+    #price {
+        position: absolute;
+    }
+}
+@media screen and (max-width: 1500px) {
+    #button {
+        position: absolute;
+        bottom: 1em;
+        right: 1em;
+        padding: 0.4em 6em;
+    }
+    #price {
+        position: absolute;
+    }
+}
+@media screen and (max-width: 1199px) {
+    #button {
+        position: absolute;
+        bottom: 1em;
+        right: 1em;
+        padding: 0.4em 7em;
+    }
+    #price {
+        margin-right: 1.5em;
+    }
+}
+@media screen and (max-width: 980px) {
+    #card {
+        max-width: 20rem;
+        height: 28rem;
+    }
+    #button {
+        position: absolute;
+        bottom: 1em;
+        right: 1em;
+        padding: 0.4em 8em;
+    }
+    #price {
+        margin-right: 3em;
+        color: red;
+    }
+}
+
+
+.img-order {
+    width: 10rem;
+    margin-right: 1rem;
+}
