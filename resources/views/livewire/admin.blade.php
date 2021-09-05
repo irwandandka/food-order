@@ -150,7 +150,7 @@
                 <div class="card rounded shadow">
                     <div class="card-header text-center text-primary font-weight-bold">Data Menu</div>
                     <div class="card-body">
-                        <button wire:click="showForm" class="btn btn-success mb-3">Create</button>
+                        <button wire:click="showForm" class="btn btn-info mb-3">Create</button>
                         <div class="table-responsive">
                             <table class="table table-borderless table-hovered table-striped">
                                 <thead class="bg-primary text-light">
@@ -161,7 +161,7 @@
                                         <th>Harga</th>
                                         <th>Stock</th>
                                         <th>Image</th>
-                                        <th>Action</th>
+                                        <th>Options</th>
                                     </tr>
                                 </thead>
                                 <tbody>

@@ -41,7 +41,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">{{ $editMode ? 'Update' : 'Create' }}</button>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-save mr-2"></i>{{ $editMode ? 'Update' : 'Create' }}</button>
                     </form>
                 </div>
             </div>
@@ -52,9 +52,9 @@
     <div class="row">
         <div class="col-md-12 mb-5">
             <div class="card rounded shadow">
-                <div class="card-header text-center text-primary font-weight-bold">Data Menu</div>
+                <div class="card-header text-center text-primary font-weight-bold">Data Admin</div>
                 <div class="card-body">
-                    <button wire:click="showForm" class="btn btn-success mb-3">Create</button>
+                    <button wire:click="showForm" class="btn btn-info mb-3"><i class="fas fa-plus-circle mr-2"></i>Create</button>
                     <div class="table-responsive">
                         <table class="table table-borderless table-hovered table-striped">
                             <thead class="bg-primary text-light">
@@ -72,8 +72,8 @@
                                     <td class="text-center align-middle">{{ $user->name }}</td>
                                     <td class="text-center align-middle">{{ $user->email }}</td>
                                     <td class="text-center align-middle">
-                                        <button wire:click="edit({{ $user }})" class="btn btn-success mb-sm-2 mb-lg-0">Edit</button>
-                                        <a wire:click="delete({{ $user->id }})" class="btn btn-danger mb-sm-2 mb-lg-0">Delete</a>
+                                        <button wire:click="edit({{ $user }})" class="btn btn-success mb-sm-2 mb-lg-0"><i class="fas fa-edit mr-2"></i>Edit</button>
+                                        <a wire:click="delete({{ $user->id }})" class="btn btn-danger mb-sm-2 mb-lg-0"><i class="fas fa-trash mr-2"></i>Delete</a>
                                     </td>
                                 </tr>
                                 @empty

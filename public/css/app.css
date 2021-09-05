@@ -100,3 +100,73 @@
     color: black;
     border-radius: 10px;
 }
+
+.divider {
+    width: 6rem;
+}
+
+.carousel-item {
+    height: 100vh;
+}
+
+.carousel-item img {
+    filter: brightness(50%);
+}
+
+.carousel-caption {
+    position: absolute;
+    text-transform: uppercase;
+    top: 38%;
+}
+
+.carousel-caption h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    letter-spacing: .3rem;
+    text-shadow: .1rem .1rem .8rem black;
+    padding-bottom: .2rem;
+}
+
+.carousel-caption h5 {
+    font-size: 1.5rem;
+    text-shadow: .1rem .1rem .8rem black;
+    padding-bottom: 1rem;
+}
+
+.btn-lg {
+    border-width: medium;
+    border-radius: 0;
+    font-size: 1.1rem;
+}
+
+.btn-lg:hover {
+    font-weight: bolder;
+}
+
+footer {
+    background-color: #6777ef;
+    color: white;
+    padding: 2rem 0 3rem;
+    margin-top: 1rem;
+}
+
+footer h1 {
+    font-weight: bolder;
+    letter-spacing: .2rem;
+    margin-bottom: 1rem;
+}
+
+footer a {
+    color: white;
+    font-size: 2rem;
+    margin: 1.2rem .5rem 0 0;
+}
+
+footer a:hover {
+    color: #a8a1f0;
+}
+
+footer .socket {
+    border-top: .2rem solid white;
+    width: 100%;
+}

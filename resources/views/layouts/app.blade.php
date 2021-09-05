@@ -29,7 +29,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-dark bg-blue shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-dark bg-blue shadow-sm fixed-top">
             <div class="container">
                 <a class="navbar-brand font-weight-bold" href="{{ route('home') }}">
                     Makan Bang
@@ -60,9 +60,12 @@
                                 </li>
                             @endif
                         @else
+                            <li class="nav-item mr-3">
+                                <a class="nav-link {{ request()->path() == 'home' ? 'active font-weight-bold' : '' }}" href="{{ route('home') }}">Home</a>
+                            </li>
                             @if (Auth::user()->roles == 'admin')
                                 <li class="nav-item mr-3">
-                                    <a class="nav-link {{ request()->path() == 'dashboard' ? 'active font-weight-bold border-bottom-light' : '' }}" href="{{ route('dashboard') }}">Dashboard</a>
+                                    <a class="nav-link {{ request()->path() == 'dashboard' ? 'active font-weight-bold' : '' }}" href="{{ route('dashboard') }}">Dashboard</a>
                                 </li>
                             @endif
                             <li class="nav-item dropdown">
