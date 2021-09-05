@@ -85,6 +85,18 @@
 
 
 .img-order {
-    width: 10rem;
+    width: 12rem;
     margin-right: 1rem;
+}
+
+/* .center-item {
+    box-sizing: content-box;
+    margin: 0 4rem;
+} */
+
+.message-content {
+    background-color: lightgray;
+    margin-right: 1rem;
+    color: black;
+    border-radius: 10px;
 }

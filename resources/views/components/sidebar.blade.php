@@ -17,15 +17,15 @@
     <div class="sidebar-heading">Admin</div>
 
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item {{ request()->path() == 'dashboard' ? 'active' : '' }}">
-      <a class="nav-link " href="{{ route('dashboard') }}">
-        <i class="fas fa-fw fa-tachometer-alt"></i>
-        <span>Dashboard</span></a>
-    </li>
     <li class="nav-item {{ request()->path() == 'home' ? 'active' : '' }}">
       <a class="nav-link " href="{{ route('home') }}">
         <i class="fas fa-fw fa-home"></i>
         <span>Home</span></a>
+    </li>
+    <li class="nav-item {{ request()->path() == 'dashboard' ? 'active' : '' }}">
+      <a class="nav-link " href="{{ route('dashboard') }}">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Dashboard</span></a>
     </li>
     <li class="nav-item {{ request()->path() == 'orders' ? 'active' : '' }}">
       <a class="nav-link " href="{{ route('orders') }}">
@@ -37,8 +37,6 @@
         <i class="fas fa-fw fa-users-cog"></i>
         <span>Tambah Admin</span></a>
     </li>
-
-
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block" />
