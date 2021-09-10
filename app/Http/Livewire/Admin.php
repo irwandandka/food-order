@@ -41,6 +41,7 @@ class Admin extends Component
     public function closeForm()
     {
         $this->class = "d-none";
+        $this->reset(['name','description','price','stock','image']);
     }
 
     // realtime validation image upload livewire
@@ -71,9 +72,11 @@ class Admin extends Component
         if($this->updateMode == true) {
             Menu::find($this->menuId)->update($data);
             session()->flash('message','Berhasil Edit Menu');
+            session()->flash('type','success');
         } else {
             Menu::create($data);
             session()->flash('message','Berhasil Menambah Menu!');
+            session()->flash('type','success');
         }
         $this->reset(['name','description','price','stock','image']);
         $this->closeForm();

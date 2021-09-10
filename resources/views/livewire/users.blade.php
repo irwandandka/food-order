@@ -1,8 +1,6 @@
 <div>
     @if(session('message'))
-        <div class="alert alert-success text-center">
-            <strong>{{ session('message') }}</strong>
-        </div>
+        <x-alert></x-alert>
     @endif
     
     <div class="row mb-4 {{ $class }}">

@@ -1,12 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    @if (session('error'))
-        <div class="alert alert-success mt-2 mb-4 text-center">
-            <strong>{{ session('error') }}</strong>
+{{-- <div class="container form-login">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            @if (session('error'))
+                <div class="alert alert-danger mb-4 text-center">
+                    <strong>{{ session('error') }}</strong>
+                </div>
+            @endif
         </div>
-    @endif
+    </div>
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -72,6 +76,44 @@
                     </form>
                 </div>
             </div>
+        </div>
+    </div>
+</div> --}}
+
+
+<div class="container form-login">
+    <div class="row content">
+        <div class="col-md-6">
+            <img src="{{ asset('img/Papaya_salad_banner_logo_cartoon_art_illustration.jpg') }}" class="img-fluid" alt="Image">
+        </div>
+        <div class="col-md-6">
+            <h3 class="login-text mb-3">Login</h3>
+            <form action="{{ route('login') }}" method="POST">
+                @csrf
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" class="form-control-login" value="{{ old('email') }}">
+                    @error('email')
+                        <span class="text-danger" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" class="form-control-login" value="{{ old('password') }}">
+                    @error('password')
+                        <span class="text-danger" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+                <div class="form-group form-check">
+                    <input type="checkbox" name="remember" id="remember" class="form-check-input" {{ old('remember') ? 'checked' : '' }}>
+                    <label for="remember" class="form-check-label">Remember Me</label>
+                </div>
+                <button type="submit" class="btn btn-class">Login</button>
+            </form>
         </div>
     </div>
 </div>

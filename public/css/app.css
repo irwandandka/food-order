@@ -170,3 +170,66 @@ footer .socket {
     border-top: .2rem solid white;
     width: 100%;
 }
+
+.imgMenu {
+    width: 100%;
+    height: 10rem;
+}
+
+.scroll {
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.form-login {
+    margin-top: 7rem;
+}
+
+/* Login Form */
+.content {
+    margin: 8%;
+    background-color: #fff;
+    padding: 4rem 1rem;
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, .05);
+}
+
+.login-text {
+    font-style: normal;
+    font-weight: 600 !important;
+    text-align: center;
+}
+
+.form-control-login {
+    display: block;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    border-color: #6777ef !important;
+    border-style: solid !important;
+    border-width: 0 0 1px 0 !important;
+    padding: 0px !important;
+    color: #495057;
+    height: auto;
+    border-radius: 0;
+    background-color: #fff;
+    background-clip: padding-box;
+}
+
+.form-control-login:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #fff;
+    outline: 0;
+    box-shadow: none;
+}
+
+.btn-class {
+    border-color: #6777ef;
+    color: #6777ef;
+}
+
+.btn-class:hover {
+    background-color: #6777ef;
+    color: white;
+}

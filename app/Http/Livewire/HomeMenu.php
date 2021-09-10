@@ -5,12 +5,36 @@ namespace App\Http\Livewire;
 use App\Models\Menu;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
-use Illuminate\Support\Str;
-
+use Livewire\WithPagination;
 
 class HomeMenu extends Component
 {
-    public $countItem = 0, $showModal = false, $dataItem = [], $userId, $dataFinal;
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
+
+    public $countItem = 0;
+    public $showModal = false;
+    public $dataItem = [];
+    public $userId; 
+    public $class = 'd-none';
+    public $totalPrice;
+    public $cashClass = 'd-none';
+    public $summaryClass = 'd-block';
+    public $cash;
+
+    public function mount()
+    {
+        $carts = \Cart::session(auth()->user()->id)->getContent();
+        $total = 0;
+        foreach($carts as $cart) {
+            $total += $cart['quantity'];
+        }
+        $this->countItem = $total;
+    }
+
+    protected $rules = [
+        'cash' => 'required|numeric|min:10000',
+    ];
 
     public function addItem($id)
     {
@@ -21,18 +45,66 @@ class HomeMenu extends Component
         \Cart::session($userID)->add(array(
             'id' => $rowId,
             'name' => $Product->name,
-            'description' => $Product->description,
             'price' => $Product->price,
             'quantity' => 1,
-            'image' => $Product->image,
+            'associatedModel' => $Product,
         ));
         $this->countItem++;
     }
 
+    public function checkCash()
+    {
+        $this->validate();
+        // $this->addError('cash', 'Kurang Duitmu');
+    }
+
+    public function cashEvent($event)
+    {
+        if($event == 'now') {
+            $this->cashClass = 'd-block';
+            $this->summaryClass = 'd-none';
+        } else {
+            dd('tunggu dirumah');
+        }
+    }
+
+    public function closeModal()
+    {
+        $this->class = 'd-none';
+    }
+
+    public function increaseItem($rowId)
+    {
+        // mengambil id dari $rowId ex: (Cart1) to (1)
+        $menuId = substr($rowId, 4,5);
+        // select menu berdasarkan $menuId
+        $dataMenu = Menu::find($menuId);
+        // Get session cart berdasarkan user yang login
+        $cart = \Cart::session(Auth()->id())->getContent();
+        // Get spesifik cart berdasarkan kolom id sesuai dengan $rowId
+        $checkItem = $cart->whereIn('id', $rowId);
+
+        // cek jika quantity menu di database kurang atau sama dengan quantity di session cart 
+        if($dataMenu->stock <= $checkItem[$rowId]->quantity) {
+            session()->flash('message','Jumlah Item Tidak Mencukupi');
+        } else {
+            // cek jika quantity menu di database 0
+            if($dataMenu->stock == 0) {
+                session()->flash('message','Jumlah Item Tidak Mencukupi');
+            } else {
+                // update session cart menambah jumlah quantity
+                \Cart::session(Auth()->id())->update($rowId, [
+                    'quantity' => [
+                        'relative' => true,
+                        'value' => +1,
+                    ],
+                ]);
+            }
+        }
+    }
+
     public function decreaseItem($rowId)
     {
-        $idProduct = substr($rowId, 4,5);
-        $product = Menu::find($idProduct);
         $cart = \Cart::session(Auth()->id())->getContent();
         $checkItem = $cart->whereIn('id', $rowId);
 
@@ -46,7 +118,6 @@ class HomeMenu extends Component
                 ]
             ]);
         }
-        // \Cart::session($userID)->remove($rowId);
     }
 
     public function removeItem($rowId)
@@ -54,22 +125,18 @@ class HomeMenu extends Component
         \Cart::session(Auth()->id())->remove($rowId);
     }
 
-    public function showItem($idUser)
+    public function showItem()
     {
-        $check = \Cart::session(Auth()->id())->getContent();
-        // $this->dataFinal = collect((object) $this->dataItem);
-        // convert dataItem to collection
-        // $this->dataFinal = collect($this->dataItem)->values();
+        $this->class = 'd-block';
     }
 
     public function render()
     {
-        $menu = Menu::all();
+        $menu = Menu::paginate(8);
 
-        
-        $items = \Cart::session(Auth()->id())->getContent()->sortBy(function($cart) {
-            return $cart->attributes->get('added_at');
-        });;
+        $this->totalPrice = \Cart::session(auth()->user()->id)->getTotal();
+
+        $items = \Cart::session(Auth()->id())->getContent();
         if (\Cart::isEmpty()) {
             $cartData = [];
         } else {
@@ -79,6 +146,7 @@ class HomeMenu extends Component
                     'name' => $item->name,
                     'qty' => $item->quantity,
                     'price' => $item->price,
+                    'image' => $item->associatedModel->image,
                 ];
             }
             $cartData = collect($cart);

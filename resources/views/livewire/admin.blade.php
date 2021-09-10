@@ -1,8 +1,6 @@
 <div>
         @if(session('message'))
-            <div class="alert alert-success text-center">
-                <strong>{{ session('message') }}</strong>
-            </div>
+            <x-alert></x-alert>
         @endif
 
         <!-- Content Row -->
@@ -134,6 +132,8 @@
                                         <img class="img-fluid w-25 mt-4" src="{{ $image->temporaryUrl() }}">
                                     @elseif ($updateMode)
                                         <img class="img-fluid w-25 mt-4" src="{{ asset('storage/images/' . $image) }}">
+                                    @else
+                                        <span>there's no image uploaded</span>
                                     @endif
                                 </div>
                             </div>
@@ -176,8 +176,8 @@
                                             <img class="img-fluid w-50" src="{{ asset('storage/images/' . $menu->image) }}">
                                         </td>
                                         <td class="text-center align-middle">
-                                            <button wire:click="showForm({{ $menu->id }})" class="btn btn-success mb-sm-2 mb-lg-0">Edit</button>
-                                            <a wire:click="delete({{ $menu->id }})" class="btn btn-danger mb-sm-2 mb-lg-0">Delete</a>
+                                            <button wire:click="showForm({{ $menu->id }})" class="btn btn-success mb-2">Edit</button>
+                                            <a wire:click="delete({{ $menu->id }})" class="btn btn-danger">Delete</a>
                                         </td>
                                     </tr>
                                     @empty

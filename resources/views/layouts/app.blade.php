@@ -61,7 +61,7 @@
                             @endif
                         @else
                             <li class="nav-item mr-3">
-                                <a class="nav-link {{ request()->path() == 'home' ? 'active font-weight-bold' : '' }}" href="{{ route('home') }}">Home</a>
+                                <a class="nav-link {{ request()->path() == '/' ? 'active font-weight-bold' : '' }}" href="{{ route('home') }}">Home</a>
                             </li>
                             @if (Auth::user()->roles == 'admin')
                                 <li class="nav-item mr-3">
@@ -74,11 +74,6 @@
                                 </a>
     
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        Tambah Admin
-                                    </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
