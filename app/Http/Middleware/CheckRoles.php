@@ -15,12 +15,14 @@ class CheckRoles
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next, $role)
     {
         $user = Auth::user();
-        if ($user->roles === 'admin') {
+        if ($user->roles === $role) {
             return $next($request);
         }
+        session()->flash('message','Waduh Anda Bukan Admin Lurrr!');
+        session()->flash('type','warning');
         return redirect()->back();
 
     }

@@ -16,7 +16,7 @@ class Authenticate extends Middleware
     {
         if (!$request->expectsJson()) {
             session()->flash('error','Login Dulu Bang');
-            return redirect()->route('login');
+            return route('login');
         }
     }
 }
