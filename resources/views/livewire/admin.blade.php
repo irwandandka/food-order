@@ -93,7 +93,7 @@
             <div class="col-md-12">
                 <div class="card rounded shadow">
                     <div class="card-header text-center text-primary font-weight-bold">
-                        Create New Menu 
+                        {{ $formTitle }} 
                         <span wire:click="closeForm" class="float-right" style="cursor: pointer;"><i class="fas fa-fw fa-1x fa-times"></i></span>
                     </div>
                     <div class="card-body">
@@ -137,7 +137,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Tambah</button>
+                            <button type="submit" class="btn btn-primary">{{ $buttonSubmit }}</button>
                         </form>
                     </div>
                 </div>

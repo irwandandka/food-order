@@ -4,6 +4,9 @@ namespace App\Http\Livewire;
 
 use App\Models\Menu;
 use App\Models\User;
+use Illuminate\Http\Testing\File as TestingFile;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -13,8 +16,10 @@ class Admin extends Component
 
     // public property for form create and update
     public $name, $description, $price, $stock, $menuId;
+    // public property for view admin livewire
+    public $buttonSubmit = 'Create', $class = "d-none", $formTitle = 'Create New Menu';
     // public property for livewire admin
-    public $users, $totalMenu, $order, $image, $class = "d-none", $updateMode = false;
+    public $users, $totalMenu, $order, $image, $updateMode = false;
 
     public function mount()
     {
@@ -27,12 +32,15 @@ class Admin extends Component
     {
         if($menuId) {
             $menu = Menu::where('id', $menuId)->first();
+            $this->menuId = $menu->id;
             $this->name = $menu->name; 
             $this->description = $menu->description; 
             $this->price = $menu->price; 
-            $this->stock = $menu->stock; 
-            $this->image = $menu->image; 
+            $this->stock = $menu->stock;
+            $this->image = $menu->image;
             $this->updateMode = true;
+            $this->buttonSubmit = 'Update';
+            $this->formTitle = "Update Menu $this->name";
         }
         $this->class = "d-block";
     }
@@ -41,6 +49,9 @@ class Admin extends Component
     public function closeForm()
     {
         $this->class = "d-none";
+        $this->updateMode = false;
+        $this->buttonSubmit = 'Create';
+        $this->formTitle = 'Create New Menu';
         $this->reset(['name','description','price','stock','image']);
     }
 
@@ -56,8 +67,19 @@ class Admin extends Component
     public function submit()
     {
         // storing uploaded image to images  
-        $name = md5($this->image . microtime()).'.'.$this->image->extension();
-        $this->image->storeAs('images', $name);
+        if($this->updateMode == false) {
+            $name = md5($this->image . microtime()).'.'.$this->image->extension();
+            $this->image->storeAs('images', $name);
+        } else {
+            $data = Menu::find($this->menuId);
+            if($this->image != $data->image) {
+                File::delete('storage/images/' . $data->image);
+                $name = md5($this->image . microtime()).'.'.$this->image->extension();
+                $this->image->storeAs('images', $name);
+            } else {
+                $name = $data->image;
+            }
+        }
 
         // reuseable data 
         $data = [
@@ -85,8 +107,11 @@ class Admin extends Component
     // method for delete menu
     public function delete($id)
     {
-        Menu::find($id)->delete();
+        $menu = Menu::find($id);
+        File::delete('storage/images/' . $menu->image);
+        $menu->delete();
         session()->flash('message','Berhasil Menghapus Menu!');
+        session()->flash('type','success');
         return redirect()->route('dashboard');
     }
 
