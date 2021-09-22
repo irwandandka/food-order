@@ -233,3 +233,12 @@ footer .socket {
     background-color: #6777ef;
     color: white;
 }
+
+.input-message {
+    padding: 0.5rem 1rem;
+    width: 20rem;
+}
+
+.title-message {
+    padding: 0.5rem 1rem;
+}

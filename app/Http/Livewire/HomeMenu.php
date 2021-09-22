@@ -3,24 +3,30 @@
 namespace App\Http\Livewire;
 
 use App\Models\Menu;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Order;
 use Livewire\Component;
+use Illuminate\Support\Str;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Auth;
 
 class HomeMenu extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
-    public $countItem = 0;
-    public $showModal = false;
-    public $dataItem = [];
-    public $userId; 
-    public $class = 'd-none';
-    public $totalPrice;
-    public $cashClass = 'd-none';
-    public $summaryClass = 'd-block';
+    public $address;
+    public $btnOrder = 'disabled';
     public $cash;
+    public $cashClass = 'd-none';
+    public $countItem = 0;
+    public $class = 'd-none';
+    public $dataItem = [];
+    public $message = [];
+    public $messageClass = 'd-none';
+    public $summaryClass = 'd-block';
+    public $showModal = false;
+    public $totalPrice;
+    public $userId; 
 
     public function mount()
     {
@@ -32,9 +38,12 @@ class HomeMenu extends Component
         $this->countItem = $total;
     }
 
-    protected $rules = [
-        'cash' => 'required|numeric|min:10000',
-    ];
+    protected function rules()
+    {
+        return [
+            'cash' => ['required', 'numeric', 'min:' . $this->totalPrice],
+        ];
+    }
 
     public function addItem($id)
     {
@@ -44,6 +53,7 @@ class HomeMenu extends Component
 
         \Cart::session($userID)->add(array(
             'id' => $rowId,
+            // 'menu_id' => $Product->id,
             'name' => $Product->name,
             'price' => $Product->price,
             'quantity' => 1,
@@ -55,7 +65,14 @@ class HomeMenu extends Component
     public function checkCash()
     {
         $this->validate();
-        // $this->addError('cash', 'Kurang Duitmu');
+        $this->btnOrder = '';
+    }
+
+    public function createOrder()
+    {
+        if($this->btnOrder = '') {
+            dd('pesan');
+        }
     }
 
     public function cashEvent($event)
@@ -128,6 +145,46 @@ class HomeMenu extends Component
     public function showItem()
     {
         $this->class = 'd-block';
+    }
+
+    public function addMessage($rowId)
+    {
+        $this->message[] = [
+
+        ];
+    }
+
+    public function orderNow()
+    {
+        $carts = \Cart::session(auth()->user()->id)->getContent();
+        foreach($carts as $order) {
+            $orders[] = [
+                'user_id' => auth()->user()->id,
+                'menu_id' => $order['associatedModel']['id'],
+                'message' => 'lorem ipsum',
+                'quantity' => $order['quantity'],
+                'pay' => $this->cash,
+                'total' => $this->totalPrice,
+            ];
+        }
+        $order = Order::create([
+            'invoice_number' => Str::random(10),
+            'user_id' => auth()->user()->id,
+            'pay' => $this->cash,
+            'total' => $this->totalPrice,
+            'address' => $this->address,
+        ]);
+        foreach($orders as $pivot) {
+            $pivotData = $pivot['menu_id'];
+            $message = $pivot['message'];
+            $quantity = $pivot['quantity'];
+            $order->menu()->attach($pivotData, ['quantity' => $quantity, 'message' => $message]);
+        }
+
+        \Cart::session(auth()->user()->id)->clear();
+        session()->flash('message','Pesanan Kamu Sedang Diproses, Harap Menunggu 😉');
+        session()->flash('type','success');
+        $this->reset();
     }
 
     public function render()

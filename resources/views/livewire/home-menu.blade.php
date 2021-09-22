@@ -29,6 +29,17 @@
                                 <button wire:click="decreaseItem('{{ $cart['rowId'] }}')" class="btn btn-sm btn-danger d-inline">-</button>
                                 <span class="badge badge-primary px-3 py-2 badge-pill mx-2">{{ $cart['qty'] }}</span>
                                 <button wire:click="increaseItem('{{ $cart['rowId'] }}')" class="btn btn-sm btn-primary d-inline">+</button>
+                                {{-- <button class="btn btn-sm btn-primary ml-2" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  <i class="fas fa-comment-dots fa-fw"></i>
+                                </button>
+                                <div class="">
+                                  <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
+                                    <h6 class="dropdown-header title-message">Catatan Pesanan?</h6>
+                                    <div class="dropdown-item d-flex align-items-center input-message" href="#">
+                                      <input type="text" wire:model="message" class="form-control">
+                                    </div>
+                                  </div>
+                                </div> --}}
                             </div>
                         </div>
                       @endforeach
@@ -43,6 +54,10 @@
                           <button wire:click="cashEvent('cod')" class="btn btn-info">COD</button>
                         </div>
                         <div class="{{ $cashClass }}">
+                          <div class="mb-3">
+                            <label for="address" class="form-label">Alamat</label>
+                            <input type="text" wire:model="address" id="address" class="form-control">
+                          </div>
                           <label for="cash" class="form-label">Masukkan Nominal</label>
                           <input type="number" wire:model="cash" id="cash" class="form-control">
                           @if ($errors->has('cash'))
@@ -55,7 +70,7 @@
                   </div>
                 </div>
                 <div class="card-footer">
-                  <button wire:click="orderNow" type="button" class="btn btn-primary float-right"><i class="fas fa-money-bill-wave mr-2"></i>Pesan!</button>
+                  <button wire:click="orderNow" type="button" class="btn btn-primary float-right {{ $btnOrder }}"><i class="fas fa-money-bill-wave mr-2"></i>Pesan!</button>
                 </div>
             </div>
         </div>
@@ -73,7 +88,6 @@
           @forelse ($menus as $menu)
             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-5">
                 <div id="card" class="card rounded shadow">
-                    {{-- <img src="https://trilogi.ac.id/universitas/wp-content/uploads/2017/07/dummy-img.png" class="card-img-top" alt="..."> --}}
                     <img src="{{ asset('storage/images/' . $menu->image) }}" class="card-img-top imgMenu" alt="...">
                     <div class="card-body">
                         <h4 class="card-title font-weight-bold text-capitalize text-center">{{ $menu->name }}</h4>
