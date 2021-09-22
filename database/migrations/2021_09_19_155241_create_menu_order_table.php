@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrderMenusTable extends Migration
+class CreateMenuOrderTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateOrderMenusTable extends Migration
      */
     public function up()
     {
-        Schema::create('order_menus', function (Blueprint $table) {
+        Schema::create('menu_order', function (Blueprint $table) {
             $table->id();
-            $table->string('invoice_number');
             $table->foreignId('menu_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('order_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->string('message');
             $table->integer('quantity');
             $table->timestamps();
         });
@@ -29,6 +30,6 @@ class CreateOrderMenusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_menus');
+        Schema::dropIfExists('menu_order');
     }
 }
