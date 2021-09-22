@@ -10,7 +10,6 @@ class Orders extends Component
 {
     public function render()
     {
-        // $orders = DB::table('menu_order')->get();
         $orders = Order::with('user')->get();
         return view('livewire.orders', [
             'orders' => $orders,

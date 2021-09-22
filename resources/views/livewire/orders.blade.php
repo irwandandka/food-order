@@ -12,10 +12,9 @@
             <div class="card rounded shadow mb-4">
                 <div class="card-body">
                     <div class="row mx-1 my-2">
-                        <span class="badge badge-primary mr-2">{{ $order->user->name }}</span>
-                        <span class="badge badge-info mr-2">{{ $order->address }}</span>
-                        <span class="badge badge-success mr-2">{{ $order->created_at->format('l-M-y') }}</span>
-                        <span class="badge badge-success">{{ $order->address }}</span>
+                        <p class="d-inline-block">Nama : <span class="badge badge-primary mr-2">{{ $order->user->name }}</span></p>
+                        <p class="d-inline">Alamat : <span class="badge badge-info mr-2">{{ $order->address }}</span></p>
+                        <p class="d-inline">Tanggal : <span class="badge badge-success mr-2">{{ $order->created_at->format('l, d-M-Y') }}</span></p>
                     </div>
                     @foreach ($order->menu as $item)
                     <div class="row mb-3">

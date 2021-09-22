@@ -2,8 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Menu;
-use App\Models\User;
+use App\Models\{Menu, User, Order};
 use Illuminate\Http\Testing\File as TestingFile;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -18,13 +17,15 @@ class Admin extends Component
     public $name, $description, $price, $stock, $menuId;
     // public property for view admin livewire
     public $buttonSubmit = 'Create', $class = "d-none", $formTitle = 'Create New Menu';
-    // public property for livewire admin
-    public $users, $totalMenu, $order, $image, $updateMode = false;
+    // public property for admin livewire component 
+    public $users, $totalMenu, $orders, $earning, $image, $updateMode = false;
 
     public function mount()
     {
         $this->users = User::where('roles', 'user')->count();
         $this->totalMenu = Menu::count();
+        $this->orders = Order::count();
+        $this->earning = Order::sum('total');
     }
 
     // method for showing form
