@@ -3,11 +3,8 @@
 namespace App\Http\Livewire;
 
 use App\Models\{Menu, User, Order};
-use Illuminate\Http\Testing\File as TestingFile;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
-use Livewire\Component;
-use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\{File, Storage};
+use Livewire\{Component, WithFileUploads};
 
 class Admin extends Component
 {

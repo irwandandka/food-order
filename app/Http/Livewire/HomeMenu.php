@@ -17,6 +17,7 @@ class HomeMenu extends Component
     public $address;
     public $btnOrder = 'disabled';
     public $cash;
+    public $cashType;
     public $cashClass = 'd-none';
     public $countItem = 0;
     public $class = 'd-none';
@@ -25,6 +26,7 @@ class HomeMenu extends Component
     public $messageClass = 'd-none';
     public $summaryClass = 'd-block';
     public $showModal = false;
+    public $showAddress = 'd-none';
     public $totalPrice;
     public $userId; 
 
@@ -79,9 +81,13 @@ class HomeMenu extends Component
     {
         if($event == 'now') {
             $this->cashClass = 'd-block';
+            $this->showAddress = 'd-block';
             $this->summaryClass = 'd-none';
         } else {
-            dd('tunggu dirumah');
+            $this->showAddress = 'd-block';
+            $this->btnOrder = '';
+            $this->summaryClass = 'd-none';
+            $this->cashType = 'cod';
         }
     }
 
@@ -170,7 +176,7 @@ class HomeMenu extends Component
         $order = Order::create([
             'invoice_number' => Str::random(10),
             'user_id' => auth()->user()->id,
-            'pay' => $this->cash,
+            'pay' => $this->cashType == 'cod' ? null : $this->cash, 
             'total' => $this->totalPrice,
             'address' => $this->address,
         ]);

@@ -15,6 +15,10 @@
                         <p class="d-inline-block">Nama : <span class="badge badge-primary mr-2">{{ $order->user->name }}</span></p>
                         <p class="d-inline">Alamat : <span class="badge badge-info mr-2">{{ $order->address }}</span></p>
                         <p class="d-inline">Tanggal : <span class="badge badge-success mr-2">{{ $order->created_at->format('l, d-M-Y') }}</span></p>
+                        <p class="d-inline">Status Pesanan : <span class="badge badge-success mr-2">{{ $order->status }}</span></p>
+                        <div class="">
+                            <button wire:click="updateStatus({{ $order->id }})" class="btn btn-sm btn-info ml-3 rounded">Selesai</button>
+                        </div>
                     </div>
                     @foreach ($order->menu as $item)
                     <div class="row mb-3">
@@ -27,7 +31,7 @@
                             <p class="d-inline-block">Description <span class="badge badge-info">{{ $item->description }}</span></p>
                             <p class="d-inline-block">Harga <span class="badge badge-primary">{{ $item->price }}</span></p>
                         </div>
-                        <div class="col-md-4 center-item">
+                        <div class="col-md-3 center-item">
                             <p>Quantity <span class="badge badge-primary">{{ $item->pivot->quantity }}</span></p>
                             <p>Total Harga <span class="badge badge-success">{{ $item->pivot->quantity * $item->price }}</span></p>
                         </div>

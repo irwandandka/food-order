@@ -53,11 +53,11 @@
                           <button wire:click="cashEvent('now')" class="btn btn-success">Bayar Sekarang</button>
                           <button wire:click="cashEvent('cod')" class="btn btn-info">COD</button>
                         </div>
+                        <div class="mb-3 {{ $showAddress }}">
+                          <label for="address" class="form-label">Alamat</label>
+                          <input type="text" wire:model="address" id="address" class="form-control">
+                        </div>
                         <div class="{{ $cashClass }}">
-                          <div class="mb-3">
-                            <label for="address" class="form-label">Alamat</label>
-                            <input type="text" wire:model="address" id="address" class="form-control">
-                          </div>
                           <label for="cash" class="form-label">Masukkan Nominal</label>
                           <input type="number" wire:model="cash" id="cash" class="form-control">
                           @if ($errors->has('cash'))
