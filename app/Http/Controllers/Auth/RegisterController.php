@@ -66,8 +66,10 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $role = 'user';
-        if (Auth::user()->roles = 'admin') {
-            $role = 'admin';
+        if(Auth::user() !== null) {
+            if (Auth::user()->roles == 'admin') {
+                $role = 'admin';
+            }
         }
 
         return User::create([
