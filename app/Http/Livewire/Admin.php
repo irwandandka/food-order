@@ -4,11 +4,13 @@ namespace App\Http\Livewire;
 
 use App\Models\{Menu, User, Order};
 use Illuminate\Support\Facades\{File, Storage};
-use Livewire\{Component, WithFileUploads};
+use Livewire\{Component, WithFileUploads, WithPagination};
 
 class Admin extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, WithPagination;
+    
+    protected $paginationTheme = 'bootstrap';
 
     // public property for form create and update
     public $name, $description, $price, $stock, $menuId;
@@ -22,7 +24,7 @@ class Admin extends Component
         $this->users = User::where('roles', 'user')->count();
         $this->totalMenu = Menu::count();
         $this->orders = Order::count();
-        $this->earning = Order::sum('total');
+        $this->earning = Order::where('status', 'Selesai')->sum('total');
     }
 
     // method for showing form
@@ -115,7 +117,7 @@ class Admin extends Component
 
     public function render()
     {
-        $menu = Menu::all();
+        $menu = Menu::latest()->paginate(5);
         return view('livewire.admin', ['menus' => $menu]);
     }
 }

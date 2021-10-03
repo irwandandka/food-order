@@ -5,9 +5,14 @@ namespace App\Http\Livewire;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Users extends Component
 {
+    use WithPagination;
+
+    protected $paginationTheme = 'bootstrap';
+
     public $class = 'd-none', $state = [], $editMode = false, $user;
 
     public function showForm()
@@ -41,6 +46,7 @@ class Users extends Component
 
         User::create($validateData);
         session()->flash('message','Berhasil Menambah Admin!');
+        session()->flash('type','success');
         
         $this->reset();
         $this->closeForm();
@@ -60,6 +66,7 @@ class Users extends Component
 
         $this->user->update($validateData);
         session()->flash('message','Berhasil Update Admin!');
+        session()->flash('type','success');
 
         $this->reset();
         $this->closeForm();
@@ -67,7 +74,7 @@ class Users extends Component
 
     public function render()
     {
-        $users = User::get();
+        $users = User::latest()->paginate(5);
         return view('livewire.users', [
             'users' => $users,
         ]);
