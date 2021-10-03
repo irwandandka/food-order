@@ -35,7 +35,12 @@
     <li class="nav-item {{ request()->path() == 'users' ? 'active' : '' }}">
       <a class="nav-link " href="{{ route('users') }}">
         <i class="fas fa-fw fa-users-cog"></i>
-        <span>Tambah Admin</span></a>
+        <span>Admin</span></a>
+    </li>
+    <li class="nav-item {{ request()->path() == 'payments' ? 'active' : '' }}">
+      <a class="nav-link " href="{{ route('payment') }}">
+        <i class="fas fa-fw fa-money-bill-wave"></i>
+        <span>Payment Method</span></a>
     </li>
 
     <!-- Divider -->

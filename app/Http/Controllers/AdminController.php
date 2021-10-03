@@ -22,6 +22,11 @@ class AdminController extends Controller
         return view('admin.orders');
     }
 
+    public function payment()
+    {
+        return view('admin.payments');
+    }
+
     public function add()
     {
         return view('admin.form');

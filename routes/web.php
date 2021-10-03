@@ -16,5 +16,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('edit/{menu}', [AdminController::class, 'edit'])->name('edit.menu');
         Route::get('users', [AdminController::class, 'user'])->name('users');
         Route::get('orders', [AdminController::class, 'order'])->name('orders');
+        Route::get('payments', [AdminController::class, 'payment'])->name('payment');
     });
 });
