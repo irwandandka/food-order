@@ -74,6 +74,10 @@
                                 </a>
     
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    @if (Auth::user()->roles == 'user')
+                                        <button class="dropdown-item" type="button" data-toggle="modal" data-target="#showOrders">Pesanan</button>
+                                        <button class="dropdown-item" type="button" data-toggle="modal" data-target="#payOrder">Bayar Pesanan</button>
+                                    @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
