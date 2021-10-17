@@ -36,7 +36,7 @@
                                         <img class="img-fluid w-50" src="{{ asset('storage/images/payments/' . $payment->image) }}">
                                     </td>
                                     <td class="text-center align-middle">
-                                        <button wire:click="showForm({{ $payment->id }})" class="btn btn-success">Edit</button>
+                                        <button type="button" wire:click="showForm({{ $payment->id }})" class="btn btn-success">Edit</button>
                                         <a wire:click="delete({{ $payment->id }})" class="btn btn-danger">Delete</a>
                                     </td>
                                 </tr>

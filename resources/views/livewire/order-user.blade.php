@@ -10,7 +10,7 @@
           </div>
           <div class="modal-body">
              @forelse ($orders as $item)
-              <div class="row">
+              <div class="row mb-4">
                 <div class="col-md-12">
                   <div class="card rounded-lg shadow-lg">
                     <div class="card-body">

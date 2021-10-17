@@ -32,7 +32,7 @@
                         <h4 class="card-title font-weight-bold text-capitalize text-center">{{ $menu->name }}</h4>
                         <p class="card-text">{{ $menu->description }}</p>
                         <h5 id="price" class="card-subtitle text-blue font-weight-bold mb-lg-2 mb-md-3 mb-sm-3"
-                        style="bottom: 3em; right: 7em;">Rp {{ $menu->price }}</h5>
+                        style="bottom: 3em; right: 5.5em;">Rp {{ number_format($menu->price, 2, '.', ',') }}</h5>
                           <button id="button" wire:click="addItem({{ $menu->id }})" class="btn btn-primary rounded-pill font-weight-bold mb-auto">Beli</button>
                     </div>
                 </div>

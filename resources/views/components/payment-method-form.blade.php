@@ -28,7 +28,7 @@
                             @if ($image && $updateMode == false)
                                 <img class="img-fluid w-25 mt-4" src="{{ $image->temporaryUrl() }}">
                             @elseif ($updateMode)
-                                <img class="img-fluid w-25 mt-4" src="{{ asset('storage/images/' . $image) }}">
+                                <img class="img-fluid w-25 mt-4" src="{{ asset('storage/images/payments/' . $image) }}">
                             @else
                                 <span>there's no image uploaded</span>
                             @endif
