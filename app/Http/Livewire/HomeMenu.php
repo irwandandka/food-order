@@ -2,11 +2,9 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Menu;
-use App\Models\Order;
-use Livewire\Component;
+use App\Models\{Menu, Order, Payment};
+use Livewire\{Component, WithPagination};
 use Illuminate\Support\Str;
-use Livewire\WithPagination;
 use Illuminate\Support\Facades\Auth;
 
 class HomeMenu extends Component
@@ -18,13 +16,13 @@ class HomeMenu extends Component
     public $btnOrder = 'disabled';
     public $cash;
     public $cashType;
-    public $cashClass = 'd-none';
     public $countItem = 0;
     public $class = 'd-none';
     public $dataItem = [];
     public $message = [];
     public $messageClass = 'd-none';
     public $summaryClass = 'd-block';
+    public $paymentId;
     public $showModal = false;
     public $showAddress = 'd-none';
     public $totalPrice;
@@ -74,20 +72,6 @@ class HomeMenu extends Component
     {
         if($this->btnOrder = '') {
             dd('pesan');
-        }
-    }
-
-    public function cashEvent($event)
-    {
-        if($event == 'now') {
-            $this->cashClass = 'd-block';
-            $this->showAddress = 'd-block';
-            $this->summaryClass = 'd-none';
-        } else {
-            $this->showAddress = 'd-block';
-            $this->btnOrder = '';
-            $this->summaryClass = 'd-none';
-            $this->cashType = 'cod';
         }
     }
 
@@ -153,13 +137,6 @@ class HomeMenu extends Component
         $this->class = 'd-block';
     }
 
-    public function addMessage($rowId)
-    {
-        $this->message[] = [
-
-        ];
-    }
-
     public function orderNow()
     {
         $carts = \Cart::session(auth()->user()->id)->getContent();
@@ -176,10 +153,15 @@ class HomeMenu extends Component
         $order = Order::create([
             'invoice_number' => Str::random(10),
             'user_id' => auth()->user()->id,
-            'pay' => $this->cashType == 'cod' ? null : $this->cash, 
+            'payment_id' => $this->paymentId,
+            'pay' => $this->totalPrice,
             'total' => $this->totalPrice,
             'address' => $this->address,
         ]);
+        $payment = Payment::where('name', '=', 'COD')->first();
+        if($this->paymentId == $payment->id) {
+            Order::find($order->id)->update(['status' => 'Bayar']);
+        }
         foreach($orders as $pivot) {
             $pivotData = $pivot['menu_id'];
             $message = $pivot['message'];
@@ -188,17 +170,16 @@ class HomeMenu extends Component
         }
 
         \Cart::session(auth()->user()->id)->clear();
-        session()->flash('message','Pesanan Kamu Sedang Diproses, Harap Menunggu 😉');
+        session()->flash('message','Pesanan Berhasil Dibuat, Harap Melakukan Pembayaran 😉');
         session()->flash('type','success');
         $this->reset();
+        return redirect()->route('home');
     }
 
     public function render()
     {
         $menu = Menu::paginate(8);
-
         $this->totalPrice = \Cart::session(auth()->user()->id)->getTotal();
-
         $items = \Cart::session(Auth()->id())->getContent();
         if (\Cart::isEmpty()) {
             $cartData = [];
@@ -214,9 +195,14 @@ class HomeMenu extends Component
             }
             $cartData = collect($cart);
         }
+        if($this->address && $this->paymentId != null) {
+            $this->btnOrder = '';
+        }
+        $payments = Payment::get();
         return view('livewire.home-menu', [
             'menus' => $menu,
             'carts' => $cartData,
+            'payments' => $payments,
         ]);
     }
 }

@@ -24,7 +24,7 @@ class Admin extends Component
         $this->users = User::where('roles', 'user')->count();
         $this->totalMenu = Menu::count();
         $this->orders = Order::count();
-        $this->earning = Order::where('status', 'Selesai')->sum('total');
+        $this->earning = Order::where('status', 'Bayar')->sum('total');
     }
 
     // method for showing form
