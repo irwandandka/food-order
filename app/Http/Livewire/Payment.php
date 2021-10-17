@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Payment as ModelsPayment;
+use Illuminate\Database\Events\ModelsPruned;
 use Illuminate\Support\Facades\File;
 use Livewire\{Component, WithFileUploads, WithPagination};
 
@@ -18,7 +19,7 @@ class Payment extends Component
     public function showForm(...$paymentId)
     {
         if($paymentId) {
-            $data = ModelsPayment::find($paymentId);
+            $data = ModelsPayment::where('id', '=', $paymentId)->first();
             $this->name = $data->name;
             $this->accountNumber = $data->account_number;
             $this->image = $data->image;
@@ -49,10 +50,9 @@ class Payment extends Component
             if($this->image !== null) {
                 $name = md5($this->image . microtime()).'.'.$this->image->extension();
                 $this->image->storeAs('images/payments', $name);
-                dd('yes');
             }
         } else {
-            $data = ModelsPayment::find($this->menuId);
+            $data = ModelsPayment::find($this->paymentId);
             if($this->image != $data->image) {
                 File::delete('storage/images/payments/' . $data->image);
                 $name = md5($this->image . microtime()).'.'.$this->image->extension();
@@ -71,7 +71,7 @@ class Payment extends Component
 
         // if event property not null will execute update action
         if($this->updateMode == true) {
-            ModelsPayment::find($this->menuId)->update($data);
+            ModelsPayment::find($this->paymentId)->update($data);
             session()->flash('message','Berhasil Edit Payment Method');
             session()->flash('type','success');
         } else {
@@ -81,6 +81,16 @@ class Payment extends Component
         }
         $this->reset(['name','accountNumber','image']);
         $this->closeForm();
+    }
+
+    public function delete($id)
+    {
+        $payment = ModelsPayment::find($id);
+        File::delete('storage/images/payments/' . $payment->image);
+        $payment->delete();
+        session()->flash('message','Berhasil Menghapus Payment Method!');
+        session()->flash('type','success');
+        return redirect()->route('payment');
     }
 
     public function render()

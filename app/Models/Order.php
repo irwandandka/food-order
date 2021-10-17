@@ -19,4 +19,9 @@ class Order extends Model
     {
         return $this->belongsToMany(Menu::class)->withPivot(['quantity','message'])->withTimestamps();
     }
+
+    public function payment()
+    {
+        return $this->belongsTo(Payment::class);
+    }
 }
