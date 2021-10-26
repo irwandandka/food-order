@@ -8,7 +8,7 @@
       @if (session('message'))
         <x-alert></x-alert>
       @endif
-      <h1 class="text-center text-primary">All Menu</h1>
+      <h1 class="text-center text-primary">Daftar Menu</h1>
       <hr class="border-bottom-primary divider mb-5">
 
       {{-- Cart User Component --}}
@@ -38,7 +38,7 @@
                 </div>
             </div>
           @empty
-            <p class="text-danger text-center">Belum Ada Menu Bang</p>
+            <p class="text-danger text-center">Maaf Saat Ini Belum Ada Daftar Menu</p>
           @endforelse
       </div>
       <div class="d-flex justify-content-center">
@@ -50,17 +50,17 @@
       <footer>
         <div class="row justify-content-center">
           <div class="col-md-5 text-center">
-            <h1>Makan Bang</h1>
+            <h1>E-Kantin MHS</h1>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore pariatur eius corrupti aliquid omnis repudiandae a, quos magnam deleniti eum!</p>
             <strong>Contact Info</strong>
-            <p>(+62)812-0989-9867<br>makan.bang@gmail.com</p>
+            <p>(+62)812-0989-9867<br>kantin.mhs@gmail.com</p>
 
             <a href="#" target="_blank"><i class="fab fa-facebook-square"></i></a>
             <a href="#" target="_blank"><i class="fab fa-twitter-square"></i></a>
             <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
 
             <hr class="socket">
-            &copy 2021 Makan Bang.
+            &copy 2021 E-Kantin MHS.
           </div>
         </div>
       </footer>

@@ -8,7 +8,7 @@
         <x-card-info :users="$users" :earning="$earning" :orders="$orders" :totalMenu="$totalMenu"></x-card-info>
 
         {{-- Form Create Menu Component --}}
-        <x-create-menu-form :class="$class" :formTitle="$formTitle" :image="$image" :updateMode="$updateMode" 
+        <x-create-menu-form :class="$class" :formTitle="$formTitle" :image="$image" :menuId="$menuId" :updatedImage="$updatedImage"
         :buttonSubmit="$buttonSubmit"></x-create-menu-form>
 
         {{-- Table --}}
@@ -17,7 +17,7 @@
                 <div class="card rounded shadow">
                     <div class="card-header text-center text-primary font-weight-bold">Data Menu</div>
                     <div class="card-body">
-                        <button wire:click="showForm" class="btn btn-info mb-3">Create</button>
+                        <button wire:click="showForm" class="btn btn-info mb-3">Tambah</button>
                         <div class="table-responsive">
                             <table class="table table-borderless table-hovered table-striped">
                                 <thead class="bg-primary text-light">
@@ -26,9 +26,9 @@
                                         <th>Nama Makanan</th>
                                         <th>Deskripsi</th>
                                         <th>Harga</th>
-                                        <th>Stock</th>
-                                        <th>Image</th>
-                                        <th>Options</th>
+                                        <th>Stok</th>
+                                        <th>Gambar</th>
+                                        <th>Opsi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -44,12 +44,12 @@
                                         </td>
                                         <td class="text-center align-middle">
                                             <button wire:click="showForm({{ $menu->id }})" class="btn btn-success mb-2">Edit</button>
-                                            <a wire:click="delete({{ $menu->id }})" class="btn btn-danger">Delete</a>
+                                            <a wire:click="delete({{ $menu->id }})" class="btn btn-danger">Hapus</a>
                                         </td>
                                     </tr>
                                     @empty
                                         <tr>
-                                            <td class="text-danger text-center" colspan="7">Data Tidak Ditemukan</td>
+                                            <td class="text-danger text-center" colspan="7">Belum Ada Data Menu</td>
                                         </tr>
                                     @endforelse
                                 </tbody>

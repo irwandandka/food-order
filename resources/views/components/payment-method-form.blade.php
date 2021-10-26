@@ -10,7 +10,10 @@
                     <div class="form-group row">
                         <label for="name" class="col-sm-2 col-form-label">Nama Payment Method</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="name" wire:model="name">
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" wire:model="name">
+                            @error('name')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row">
@@ -20,17 +23,18 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="image" class="col-sm-2 col-form-label">Image</label>
+                        <label for="image" class="col-sm-2 col-form-label">Gambar</label>
                         <div class="col-sm-10">
-                            <div wire:loading wire:target="submit">Uploading...</div>
-                            <input type="file" class="form-control" id="image" wire:model="image">
-                            @error('image') <span class="text-danger">{{ $message }}</span> @enderror
-                            @if ($image && $updateMode == false)
+                            <input type="file" class="form-control" id="image" wire:model="{{ $paymentId != null ? 'updatedImage' : 'image' }}">
+                            <div wire:loading wire:target="{{ $paymentId != null ? 'updatedImage' : 'image' }}">Uploading image please wait...</div>
+                            @error('image') <div class="text-danger">{{ $message }}</div> @enderror
+                            @error('updatedImage') <div class="text-danger">{{ $message }}</div> @enderror
+                            @if ($image && $paymentId == null)
                                 <img class="img-fluid w-25 mt-4" src="{{ $image->temporaryUrl() }}">
-                            @elseif ($updateMode)
-                                <img class="img-fluid w-25 mt-4" src="{{ asset('storage/images/payments/' . $image) }}">
+                            @elseif ($paymentId)
+                                <img class="img-fluid w-25 mt-4" src="{{ $updatedImage ? $updatedImage->temporaryUrl() : asset('storage/images/payments/' . $image) }}">
                             @else
-                                <span>there's no image uploaded</span>
+                                <div>there's no image uploaded</div>
                             @endif
                         </div>
                     </div>

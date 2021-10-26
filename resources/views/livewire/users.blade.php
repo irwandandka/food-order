@@ -11,7 +11,7 @@
             <div class="card rounded shadow">
                 <div class="card-header text-center text-primary font-weight-bold">Data Admin</div>
                 <div class="card-body">
-                    <button wire:click="showForm" class="btn btn-info mb-3"><i class="fas fa-plus-circle mr-2"></i>Create</button>
+                    <button wire:click="showForm" class="btn btn-info mb-3">Tambah</button>
                     <div class="table-responsive">
                         <table class="table table-borderless table-hovered table-striped">
                             <thead class="bg-primary text-light">
@@ -19,7 +19,7 @@
                                     <th>#</th>
                                     <th>Nama</th>
                                     <th>Email</th>
-                                    <th>Options</th>
+                                    <th>Opsi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -29,13 +29,13 @@
                                     <td class="text-center align-middle">{{ $user->name }}</td>
                                     <td class="text-center align-middle">{{ $user->email }}</td>
                                     <td class="text-center align-middle">
-                                        <button wire:click="edit({{ $user }})" class="btn btn-success mb-sm-2 mb-lg-0"><i class="fas fa-edit mr-2"></i>Edit</button>
-                                        <a wire:click="delete({{ $user->id }})" class="btn btn-danger mb-sm-2 mb-lg-0"><i class="fas fa-trash mr-2"></i>Delete</a>
+                                        <button wire:click="edit({{ $user }})" class="btn btn-success mb-sm-2 mb-lg-0">Edit</button>
+                                        <a wire:click="delete({{ $user->id }})" class="btn btn-danger mb-sm-2 mb-lg-0">Hapus</a>
                                     </td>
                                 </tr>
                                 @empty
                                     <tr>
-                                        <td class="text-danger text-center" colspan="7">Data Tidak Ditemukan</td>
+                                        <td class="text-danger text-center" colspan="7">Belum Ada Data Admin</td>
                                     </tr>
                                 @endforelse
                             </tbody>

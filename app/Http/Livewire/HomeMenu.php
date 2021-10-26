@@ -82,24 +82,17 @@ class HomeMenu extends Component
 
     public function increaseItem($rowId)
     {
-        // mengambil id dari $rowId ex: (Cart1) to (1)
         $menuId = substr($rowId, 4,5);
-        // select menu berdasarkan $menuId
         $dataMenu = Menu::find($menuId);
-        // Get session cart berdasarkan user yang login
         $cart = \Cart::session(Auth()->id())->getContent();
-        // Get spesifik cart berdasarkan kolom id sesuai dengan $rowId
         $checkItem = $cart->whereIn('id', $rowId);
 
-        // cek jika quantity menu di database kurang atau sama dengan quantity di session cart 
         if($dataMenu->stock <= $checkItem[$rowId]->quantity) {
             session()->flash('message','Jumlah Item Tidak Mencukupi');
         } else {
-            // cek jika quantity menu di database 0
             if($dataMenu->stock == 0) {
                 session()->flash('message','Jumlah Item Tidak Mencukupi');
             } else {
-                // update session cart menambah jumlah quantity
                 \Cart::session(Auth()->id())->update($rowId, [
                     'quantity' => [
                         'relative' => true,
@@ -158,15 +151,18 @@ class HomeMenu extends Component
             'total' => $this->totalPrice,
             'address' => $this->address,
         ]);
-        $payment = Payment::where('name', '=', 'COD')->first();
+        $payment = Payment::where('name', '=', 'Bayar Langsung')->first();
         if($this->paymentId == $payment->id) {
-            Order::find($order->id)->update(['status' => 'Bayar']);
+            $dataOrder = Order::find($order->id);
+            $dataOrder->update(['status' => 'Bayar']);
         }
         foreach($orders as $pivot) {
             $pivotData = $pivot['menu_id'];
             $message = $pivot['message'];
             $quantity = $pivot['quantity'];
             $order->menu()->attach($pivotData, ['quantity' => $quantity, 'message' => $message]);
+            $menu = Menu::find($pivotData);
+            $menu->update(['stock' => $menu->stock - $quantity]);
         }
 
         \Cart::session(auth()->user()->id)->clear();

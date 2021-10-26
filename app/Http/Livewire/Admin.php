@@ -9,15 +9,28 @@ use Livewire\{Component, WithFileUploads, WithPagination};
 class Admin extends Component
 {
     use WithFileUploads, WithPagination;
-    
-    protected $paginationTheme = 'bootstrap';
 
-    // public property for form create and update
-    public $name, $description, $price, $stock, $menuId;
-    // public property for view admin livewire
+    protected $paginationTheme = 'bootstrap';
+    
+    protected $messages = [
+        'name.required' => 'Kolom Nama Harus Diisi',
+        'name.min' => 'Minimal 3 Karakter',
+        'name.max' => 'Maksimal 20 Karakter',
+        'description.required' => 'Kolom Deskripsi harus diisi',
+        'description.max' => 'Maksimal 30 Karakter',
+        'price.required' => 'Kolom Harga Harus Diisi',
+        'stock.required' => 'Kolom Stok Harus Diisi',
+        'image.required' => 'Anda Harus Mengupload Gambar',
+        'image.mimes' => 'Format Gambar Harus Berupa JPG, JPEG, atau PNG',
+        'image.max' => 'File Yang Anda Upload Terlalu Besar',
+        'updatedImage.required' => 'Anda Harus Mengupload Gambar',
+        'updatedImage.mimes' => 'Format Gambar Harus Berupa JPG, JPEG, atau PNG',
+        'updatedImage.max' => 'File Yang Anda Upload Terlalu Besar',
+    ];
+
+    public $name, $description, $price, $stock, $menuId, $updatedImage;
     public $buttonSubmit = 'Create', $class = "d-none", $formTitle = 'Create New Menu';
-    // public property for admin livewire component 
-    public $users, $totalMenu, $orders, $earning, $image, $updateMode = false;
+    public $users, $totalMenu, $orders, $earning, $image;
 
     public function mount()
     {
@@ -38,9 +51,8 @@ class Admin extends Component
             $this->price = $menu->price; 
             $this->stock = $menu->stock;
             $this->image = $menu->image;
-            $this->updateMode = true;
             $this->buttonSubmit = 'Update';
-            $this->formTitle = "Update Menu $this->name";
+            $this->formTitle = "Edit Menu $this->name";
         }
         $this->class = "d-block";
     }
@@ -49,35 +61,44 @@ class Admin extends Component
     public function closeForm()
     {
         $this->class = "d-none";
-        $this->updateMode = false;
         $this->buttonSubmit = 'Create';
-        $this->formTitle = 'Create New Menu';
+        $this->formTitle = 'Tambah Menu Baru';
+        $this->menuId = null;
+        $this->updatedImage = null;
         $this->reset(['name','description','price','stock','image']);
-    }
-
-    // realtime validation image upload livewire
-    public function updatedImage()
-    {
-        $this->validate([
-            'image' => 'image|max:1024|mimes:png,jpg,jpeg', // 1MB Max
-        ]);
     }
 
     // action for create and update menu
     public function submit()
     {
-        // storing uploaded image to images  
-        if($this->updateMode == false) {
-            $name = md5($this->image . microtime()).'.'.$this->image->extension();
-            $this->image->storeAs('images', $name);
-        } else {
+        $this->validate([
+            'name' => ['required','min:3','max:20'],
+            'description' => ['required','max:30'],
+            'price' => ['required','numeric'],
+            'stock' => ['required','numeric'],
+            'image' => $this->menuId == null ? ['required','mimes:jpg,jpeg,png','max:1024'] : [],
+            'updatedImage' => $this->menuId != null && $this->updatedImage != null ? ['required','mimes:jpg,jpeg,png','max:1024'] : [],
+        ]);
+
+        if($this->menuId != null) {
             $data = Menu::find($this->menuId);
-            if($this->image != $data->image) {
-                File::delete('storage/images/' . $data->image);
-                $name = md5($this->image . microtime()).'.'.$this->image->extension();
-                $this->image->storeAs('images', $name);
+            if($this->updatedImage != null) {
+                if($this->updatedImage != $data->image) {
+                    Storage::delete('storage/images/' . $data->image);
+                    $imgName = $this->updatedImage->getClientOriginalName();
+                    $this->updatedImage->storeAs('images', $imgName);
+                } else {
+                    $imgName = $data->image;
+                }
             } else {
-                $name = $data->image;
+                $imgName = $data->image;
+            }
+        } else {
+            if($this->image) {
+                $imgName = $this->image->getClientOriginalName();
+                $this->image->storeAs('images', $imgName);
+            } else {
+                $imgName = null;
             }
         }
 
@@ -87,11 +108,11 @@ class Admin extends Component
             'description' => $this->description,
             'price' => $this->price,
             'stock' => $this->stock,
-            'image' => $name,
+            'image' => $imgName,
         ];
 
         // if event property not null will execute update action
-        if($this->updateMode == true) {
+        if($this->menuId != null) {
             Menu::find($this->menuId)->update($data);
             session()->flash('message','Berhasil Edit Menu');
             session()->flash('type','success');

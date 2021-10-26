@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <div class="card rounded shadow">
             <div class="card-header text-center text-primary font-weight-bold">
-                {{ $editMode ? 'Update Admin' : 'Create New Admin' }} 
+                {{ $editMode ? 'Edit Admin' : 'Tambah Admin' }} 
                 <span wire:click="closeForm" class="float-right" style="cursor: pointer;"><i class="fas fa-fw fa-1x fa-times"></i></span>
             </div>
             <div class="card-body">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Menu;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -19,9 +20,9 @@ class OrderUser extends Component
         }
     }
 
-    public function payOrder($orderId)
+    public function payOrder(Order $order)
     {
-        Order::find($orderId)->update(['status' => 'Bayar']);
+        $order->update(['status' => 'Bayar']);
     }
 
     public function cancelOrder($orderId)
@@ -32,8 +33,8 @@ class OrderUser extends Component
 
     public function render()
     {
-        $order = Order::where('user_id', Auth::user()->id)->where('status', '=', 'Belum Bayar')->first();
-        $orders = Order::where('user_id', Auth::user()->id)->where('status', '=', 'Bayar')->get();
+        $order = Order::where('user_id', Auth::user()->id)->where('status', '=', 'Belum Bayar')->with('payment','menu')->first();
+        $orders = Order::where('user_id', Auth::user()->id)->where('status', '=', 'Bayar')->with('menu')->get();
         return view('livewire.order-user', [
             'order' => $order,
             'orders' => $orders,

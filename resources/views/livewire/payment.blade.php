@@ -5,25 +5,25 @@
     @endif
 
     {{-- Form Create Menu Component --}}
-    <x-payment-method-form :class="$class" :formTitle="$formTitle" :image="$image" :updateMode="$updateMode" 
-    :buttonSubmit="$buttonSubmit"></x-payment-method-form>
+    <x-payment-method-form :class="$class" :formTitle="$formTitle" :image="$image" :updatedImage="$updatedImage" 
+    :paymentId="$paymentId" :buttonSubmit="$buttonSubmit"></x-payment-method-form>
 
     {{-- Table --}}
     <div class="row">
         <div class="col-md-12 mb-5">
             <div class="card rounded shadow">
-                <div class="card-header text-center text-primary font-weight-bold">Data Payment Method</div>
+                <div class="card-header text-center text-primary font-weight-bold">Data Metode Pembayaran</div>
                 <div class="card-body">
-                    <button wire:click="showForm" class="btn btn-info mb-3">Create</button>
+                    <button wire:click="showForm" class="btn btn-info mb-3">Tambah</button>
                     <div class="table-responsive">
                         <table class="table table-borderless table-hovered table-striped">
                             <thead class="bg-primary text-light">
                                 <tr class="text-center">
                                     <th>#</th>
-                                    <th>Nama Payment Method</th>
+                                    <th>Nama Metode Pembayaran</th>
                                     <th>Nomor Rekening</th>
-                                    <th>Image</th>
-                                    <th>Options</th>
+                                    <th>Gambar</th>
+                                    <th>Opsi</th>
                                 </tr>
                             </thead>
                             <tbody>

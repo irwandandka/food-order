@@ -19,17 +19,6 @@
                             <button wire:click="decreaseItem('{{ $cart['rowId'] }}')" class="btn btn-sm btn-danger d-inline">-</button>
                             <span class="badge badge-primary px-3 py-2 badge-pill mx-2">{{ $cart['qty'] }}</span>
                             <button wire:click="increaseItem('{{ $cart['rowId'] }}')" class="btn btn-sm btn-primary d-inline">+</button>
-                            {{-- <button class="btn btn-sm btn-primary ml-2" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="fas fa-comment-dots fa-fw"></i>
-                            </button>
-                            <div class="">
-                              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
-                                <h6 class="dropdown-header title-message">Catatan Pesanan?</h6>
-                                <div class="dropdown-item d-flex align-items-center input-message" href="#">
-                                  <input type="text" wire:model="message" class="form-control">
-                                </div>
-                              </div>
-                            </div> --}}
                         </div>
                     </div>
                   @endforeach
@@ -55,8 +44,6 @@
                       @empty
                           <p class="text-danger">Saat Ini Belum Ada Metode Pembayaran</p>
                       @endforelse
-                      {{-- <button wire:click="cashEvent('now')" class="btn btn-success">Bayar Sekarang</button>
-                      <button wire:click="cashEvent('cod')" class="btn btn-info">COD</button> --}}
                     </div>
                   </div>
                 </div>
