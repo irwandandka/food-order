@@ -29,7 +29,7 @@
                     <h5 class="text-danger">Total Harga Rp <span class="badge badge-danger">{{ number_format($totalPrice,2,',','.') }}</span></h5>
                     <div class="{{ $summaryClass }}">
                       <div class="mb-3">
-                        <label for="address" class="form-label">Alamat</label>
+                        <label for="address" class="form-label">Nama Kelas</label>
                         <input type="text" wire:model="address" id="address" class="form-control">
                       </div>
                       <p class="text-secondary">Pilih metode pembayaran</p>

@@ -74,7 +74,7 @@ class Users extends Component
 
     public function render()
     {
-        $users = User::latest()->paginate(5);
+        $users = User::where('roles', 'admin')->latest()->paginate(5);
         return view('livewire.users', [
             'users' => $users,
         ]);

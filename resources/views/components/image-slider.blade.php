@@ -8,8 +8,8 @@
       <div class="carousel-item active">
         <img src="{{ asset('img/indonesia-427784_640.jpg') }}" class="w-100" alt="">
         <div class="carousel-caption">
-          <h1>Welcome To Makan Bang</h1>
-          <h5>Warung yang tak pernah merasa rugi</h5>
+          <h1>Welcome To Kantin MHS</h1>
+          <h5>Selamat Menikmati Menu Yang Ada</h5>
           <button class="btn btn-outline-light btn-lg">Makan Apa Nih</button>
         </div>
       </div>

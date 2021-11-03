@@ -13,7 +13,7 @@
                 <div class="card-body">
                     <div class="row mx-1 my-2">
                         <p class="d-inline-block">Nama : <span class="badge badge-primary mr-2">{{ $order->user->name }}</span></p>
-                        <p class="d-inline">Alamat : <span class="badge badge-info mr-2">{{ $order->address }}</span></p>
+                        <p class="d-inline">Kelas : <span class="badge badge-info mr-2">{{ $order->address }}</span></p>
                         <p class="d-inline">Tanggal : <span class="badge badge-success mr-2">{{ $order->created_at->format('l, d-M-Y') }}</span></p>
                         <p class="d-inline">Status Pesanan : <span class="badge badge-success mr-2">{{ $order->status }}</span></p>
                         {{-- <div class="">

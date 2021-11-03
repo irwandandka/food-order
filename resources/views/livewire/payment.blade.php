@@ -33,7 +33,11 @@
                                     <td class="text-center align-middle">{{ $payment->name }}</td>
                                     <td class="text-center align-middle">{{ $payment->account_number }}</td>
                                     <td class="text-center align-middle col-md-3">
-                                        <img class="img-fluid w-50" src="{{ asset('storage/images/payments/' . $payment->image) }}">
+                                        @if ($payment->image == null)
+                                            <p>No image uploaded</p>
+                                        @else
+                                            <img class="img-fluid w-50" src="{{ asset('storage/images/payments/' . $payment->image) }}">
+                                        @endif
                                     </td>
                                     <td class="text-center align-middle">
                                         <button type="button" wire:click="showForm({{ $payment->id }})" class="btn btn-success">Edit</button>
